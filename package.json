@@ -6,7 +6,8 @@
 	},
 	"scripts": {
 		"build": "rimraf dist && swc ./api -d dist",
-		"start": "node dist/api/index.js"
+		"start": "node dist/api/index.js",
+		"start:docker": "pnpm build && node --inspect=0.0.0.0 dist/api/index.js"
 	},
 	"devDependencies": {
 		"@swc/cli": "^0.3.12",

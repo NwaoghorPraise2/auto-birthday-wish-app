@@ -12,9 +12,9 @@
 
     },
     
-    "module":{ 
+    "module":{
         "type":"commonjs"
     },
-
+   
     "sourceMaps": "inline"
 }
