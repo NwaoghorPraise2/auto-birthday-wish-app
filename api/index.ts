@@ -12,7 +12,9 @@ app.use(morgan('dev'));
 
 
 app.get('/',(req:Request, res:Response):void =>{
-    res.send('Hello TypeScript');
+    res.json({
+        message: 'Hello World'
+    });
 });
 
 
