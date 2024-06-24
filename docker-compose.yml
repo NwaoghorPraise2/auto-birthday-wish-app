@@ -1,6 +1,7 @@
 services:
   api-service:
-    build: .
+    # build: .
+    image: nwaoghor/auto-birthday-messager:1.0.0
     ports:
       - 3001:3001
       - 9229:9229 #debug
