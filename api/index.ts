@@ -25,3 +25,5 @@ const server = ():void =>{
 };
 
 server();
+
+export default app;
