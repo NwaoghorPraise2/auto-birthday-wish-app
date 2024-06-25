@@ -1,3 +1,4 @@
 import app from '../../index';
+import express from 'express';
 
-const router = app.router;
+const router = express.Router();
