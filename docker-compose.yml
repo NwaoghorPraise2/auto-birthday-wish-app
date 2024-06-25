@@ -1,4 +1,12 @@
 services:
+  postgres:
+    image: postgres:16-alpine3.20
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: birthday_messager
+
   api-service:
     build: .
     # image: nwaoghor/auto-birthday-messager:1.0.0
@@ -6,5 +14,9 @@ services:
       - 3001:3001
       - 9229:9229 #debug
     command: pnpm start:docker
+    depends_on: 
+      - postgres
     environment:
+      DATABASE_URL: ${POSTGRES_URL}
       PORT: ${PORT}
+  
