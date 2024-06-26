@@ -11,12 +11,15 @@ services:
     build: .
     # image: nwaoghor/auto-birthday-messager:1.0.0
     ports:
-      - 3001:3001
+      - ${PORT}:${PORT}
       - 9229:9229 #debug
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/.pnpm-store
+      - /usr/src/app/node_modules
     command: pnpm start:docker
     depends_on: 
       - postgres
     environment:
-      DATABASE_URL: ${POSTGRES_URL}
+      DATABASE_URL: ${DATABASE_URL}
       PORT: ${PORT}
-  
