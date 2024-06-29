@@ -1,22 +1,6 @@
-import express, {Application, Request, Response} from 'express';
-import morgan from 'morgan';
+import app from './app';
 
-//Start Application
-const app: Application = express();
 const PORT = Number(process.env.PORT || 3001);
-
-
-
-app.use(morgan('dev'));
-
-
-
-app.get('/',(req:Request, res:Response):void =>{
-    res.json({
-        message: 'Hello World'
-    });
-});
-
 
 const server = ():void =>{
     app.listen(PORT,'0.0.0.0',():void =>{
@@ -25,5 +9,3 @@ const server = ():void =>{
 };
 
 server();
-
-export default app;
