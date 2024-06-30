@@ -1,17 +1,19 @@
+import { Request, Response } from 'express'
 import db from '../../config/db';
 
 
-const register = async () => {
+const register = (res:Response, req: Request): void=> {
+    
 }
 
 
-const login = async () => {
-
+const login = (res:Response, req: Request): void => {
+    
 }
 
 
-const changePassword = async () => {
-
+const changePassword = (res:Response, req: Request): void => {
+    
 }
 
 

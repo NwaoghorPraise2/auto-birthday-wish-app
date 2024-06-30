@@ -1,4 +1,4 @@
-import express, { Router, Application, Request, Response } from 'express';
+import express, {Application, Request, Response} from 'express';
 import logger from 'morgan';
 import auth from './services/auth/route';
 
@@ -14,9 +14,10 @@ app.use('/api/auth', auth);
 // Default route
 app.get('/', (req: Request, res: Response): void => {
     res.json({
+        code: 200,
         message: 'Hello World'
     });
 });
 
-export {Router}
+
 export default app;
