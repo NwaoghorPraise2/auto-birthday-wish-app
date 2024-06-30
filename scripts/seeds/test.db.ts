@@ -2,22 +2,20 @@ import db from '../../api/config/db';
 import { generateId } from '../../api/config/db';
 
 
-const run = async () => {
+const run = async ():Promise<void> => {
   await db.user.createMany({
     data: [
-        {
-        id: generateId(),
-        username: 'XXXX1',
-        password: 'XXXXXXXXXXX',
-        email: 'john@example.com',
-      },
-      {
-        id: generateId(),
-        username: 'XXXXrttjhbjhvhgch',
-        password: 'XXXXXXXXXXX',
-        email: 'jane@example.com',
-      }
-    ]
+            {
+            username: 'XXXX1',
+            password: 'XXXXXXXXXXX',
+            email: 'john@example.com',
+          },
+          {
+            username: 'XXXXrttjhbjhvhgch',
+            password: 'XXXXXXXXXXX',
+            email: 'jane@example.com',
+          }
+        ]
   })
 }
 
