@@ -7,7 +7,7 @@ const register = (res:Response, req: Request): void=> {
         const { username, email, password } = req.body;
         db.query(
             "INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-            [username, email, password],
+            [username, email   assword],
             (err, result) => {
               if (err) {
                 console.error(err);
