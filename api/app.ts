@@ -3,6 +3,7 @@ import logger from 'morgan';
 import auth from './services/auth/route';
 import helmet from 'helmet';
 import cors from 'cors';
+import compression from 'compression';
 
 const app: Application = express();
 
@@ -11,6 +12,7 @@ app.use(logger('dev'));
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(compression());
 
 // Route mounting
 app.use('/api/auth', auth);

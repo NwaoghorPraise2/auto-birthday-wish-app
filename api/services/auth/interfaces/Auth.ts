@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const User = z.object({
+export const User = z.object({
   username: z.string(),
   name: z.string().optional(),
   email: z.string().email(),

@@ -1,11 +1,15 @@
 import { Router } from 'express'
 import { login, register, changePassword} from './controller';
+import { User } from './interfaces/Auth';
+import { validateRequest } from '../../middlewares/validator'
 
 
 const router = Router();
 
 
-router.get('/signup', register);
+router.get('/signup', validateRequest({
+    body: User
+}), register);
 router.post('/login', login);
 router.post('/change-password', changePassword);
 
