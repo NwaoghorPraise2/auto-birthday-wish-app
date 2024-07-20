@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
 import {CRYPTO_SECRET} from '../config/config';
 
 
@@ -9,10 +9,9 @@ const stringEnforce = () :string => { // this function is to ensure that the CRY
 
 const SECRET: string = stringEnforce();
 
-export const random = () => crypto.randomBytes(128).toString('base64');
-export const authentication = (salt: string, password: string) => {
-    return crypto
-        .createHmac('sha256', [salt, password].join('/'))
-        .update(SECRET)
-        .digest('hex');
-};
+// export const random = () => crypto.randomBytes(128).toString('base64');
+
+
+export const authentication = (password: string) => {
+    return CryptoJS.AES.encrypt(password, SECRET).toString();
+}

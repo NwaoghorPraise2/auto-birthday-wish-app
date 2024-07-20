@@ -1,5 +1,6 @@
 import db from '../../config/db';
-import { User } from '@prisma/client';
+// import { User } from '@prisma/client';
+import {UserData} from './interfaces/Auth';
 
 
 export const getUserById = (id: string) => {
@@ -10,6 +11,6 @@ export const getUserByEmail = (email: string) => {
     return db.user.findUnique({where: {email}})
 }
 
-export const createUser = (User: User) => {
+export const createUser = (User: UserData) => {
     return db.user.create({data: User})
 };
