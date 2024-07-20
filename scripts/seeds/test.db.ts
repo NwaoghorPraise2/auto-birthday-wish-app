@@ -1,5 +1,4 @@
 import db from '../../api/config/db';
-import { generateId } from '../../api/config/db';
 
 
 const run = async ():Promise<void> => {
