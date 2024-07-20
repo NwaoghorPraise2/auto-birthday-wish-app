@@ -7,7 +7,7 @@ import { validateRequest } from '../../middlewares/validator'
 const router = Router();
 
 
-router.get('/signup', validateRequest({
+router.post('/signup', validateRequest({
     body: User
 }), register);
 router.post('/login', login);

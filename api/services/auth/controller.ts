@@ -1,28 +1,107 @@
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import db from '../../config/db';
-// import { User } from '@prisma/client'
 import { User } from './interfaces/Auth';
+import { createUser, getUserByEmail } from './model';
+import { random  , authentication } from '../../utils/authentication';
 
 
-const register = async (res:Response, req: Request<User>)=> {
+const register = async (res:Response, req: Request<User>, next: NextFunction)=> {
     try{
-    const {email, password, name, phone_number} = req.body;
+    //Deconstruct Request Body
+    const {username, email, password, name, phone_number} = req.body;
+    
+    // if (!username || !email || !password){
+    //     return res.status(400).json({
+    //         message: 'Please fill all fields';
+    //     });
+    // }   I'm not sure I really need this here.
+    //Check if User already Exists
+    const checkExistingUser = await getUserByEmail(email);
+    if (checkExistingUser) return res.status(400
+    ).json({message: 'User already exist'});
 
-    const isUserExist = await db.user.findUnique({
-        where: {
-            email
+    const salt = random();
+
+    const user = await createUser(
+        {   
+            username,
+            email, 
+            password: authentication(salt, password), 
+            name, 
+            phone_number, 
+            salt
         }
-    });
+    );
 
-    if (isUserExist) {
-        return res.json({
-            message: 'User already exist'
-        })
-    }
-    const insertedUser = await db.user.create({
-        data: req.body
-    })
-    return res.json(insertedUser)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // const isUserExist = await db.user.findUnique({
+    //     where: {
+    //         email
+    //     }
+    // });
+
+    // if (isUserExist) {
+    //     return res.json({
+    //         message: 'User already exist'
+    //     })
+    // }
+    // const insertedUser = await db.user.create({
+    //     data: req.body
+    // })
+    // return res.json(insertedUser)
     }catch(e){
         return res.json(e)
     }

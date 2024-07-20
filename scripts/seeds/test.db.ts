@@ -9,11 +9,13 @@ const run = async ():Promise<void> => {
             username: 'XXXX1',
             password: 'XXXXXXXXXXX',
             email: 'john@example.com',
+            salt: 'XXXXXXXXXXXxdvdc'
           },
           {
             username: 'XXXXrttjhbjhvhgch',
             password: 'XXXXXXXXXXX',
             email: 'jane@example.com',
+            salt: 'XXXXXXXXXXXxdvdcscscfsf'
           }
         ]
   })
