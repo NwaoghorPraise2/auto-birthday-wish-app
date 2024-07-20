@@ -1,5 +1,4 @@
 import db from '../../config/db';
-// import { User } from '@prisma/client';
 import {UserData} from './interfaces/Auth';
 
 

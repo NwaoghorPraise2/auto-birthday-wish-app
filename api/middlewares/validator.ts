@@ -17,7 +17,9 @@ export const validateRequest = (validators: RequestValidators)=> {
             next();
         } catch (error) {
             if (error instanceof ZodError) {
-                return res.status(422).json(error.errors.map((e) => e.message));
+                console.log(error);
+                //Handle the error better
+                return res.status(422).json(error);
             }
            next(error);
         }

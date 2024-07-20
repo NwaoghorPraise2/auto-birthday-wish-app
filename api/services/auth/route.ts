@@ -12,10 +12,4 @@ router.post('/signup', validateRequest({
 }), register);
 
 
-
-// router.post('/login', login);
-// router.post('/change-password', changePassword);
-
-
-
 export default router;

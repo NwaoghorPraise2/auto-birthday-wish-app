@@ -9,8 +9,6 @@ const stringEnforce = () :string => { // this function is to ensure that the CRY
 
 const SECRET: string = stringEnforce();
 
-// export const random = () => crypto.randomBytes(128).toString('base64');
-
 
 export const authentication = (password: string) => {
     return CryptoJS.AES.encrypt(password, SECRET).toString();

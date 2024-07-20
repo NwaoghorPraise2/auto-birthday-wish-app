@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
-import db from '../../config/db';
 import { UserData } from './interfaces/Auth';
 import { createUser, getUserByEmail } from './model';
 import { authentication } from '../../utils/authentication';
-import { User } from '@prisma/client';
 import ResponseType from '../../interfaces/Response';
 
 
