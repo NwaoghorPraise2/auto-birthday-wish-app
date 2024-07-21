@@ -1,5 +1,5 @@
 export default interface ResponseType {
-    statuscode: number;
+    status: string;
     message: string;
     data?: any;
  }

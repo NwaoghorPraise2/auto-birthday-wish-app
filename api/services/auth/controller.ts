@@ -14,7 +14,7 @@ export const register = async ( req: Request<{}, any, UserData>, res:Response<Re
         
         if (checkExistingUser) return res.status(400
         ).json({
-            statuscode: 400,
+            status: 'Error',
             message: 'User already exist'
         });
 
@@ -23,7 +23,7 @@ export const register = async ( req: Request<{}, any, UserData>, res:Response<Re
         });
 
         return res.status(201).json({
-            statuscode: 201,
+            status: 'Success',
             message: 'User created successfully',
             data: user    
         }).end();
@@ -32,7 +32,7 @@ export const register = async ( req: Request<{}, any, UserData>, res:Response<Re
 
         console.log(e);
         return res.status(400).json({
-            statuscode: 400,
+            status: 'Error',
             message: 'Error occurred during registration',
           });
     }
