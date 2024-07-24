@@ -1,5 +1,5 @@
 import db from '../../config/db';
-import {UserData} from './interfaces/Auth';
+import {UserData} from './validators';
 
 
 export const getUserById = (id: string) => {

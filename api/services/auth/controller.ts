@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { UserData } from './interfaces/Auth';
-import { createUser, getUserByEmail } from './model';
+import { UserData } from './validators';
+import { createUser, getUserByEmail } from './helpers';
 import { authentication } from '../../utils/authentication';
 import ResponseType from '../../interfaces/Response';
 

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import {register} from './controller';
-import { User } from './interfaces/Auth';
+import { User } from './validators';
 import { validateRequest } from '../../middlewares/validator'
 
 
