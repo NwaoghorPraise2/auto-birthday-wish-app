@@ -3,7 +3,6 @@ import { UserData } from './validators';
 import { createUser, getUserByEmail, getUserWithPasswordByEmail } from './helpers';
 import { authentication, comparePassword, validatePassword } from '../../utils/authentication';
 import ResponseType from '../../interfaces/Response';
-import { User } from '@prisma/client';
 
 
 export const register = async ( req: Request<{}, any, UserData>, res:Response<ResponseType>, next: NextFunction): Promise<Response<ResponseType>>  => {
@@ -54,14 +53,16 @@ export const login = async(req:Request<{}, any, UserData>, res:Response<Response
             message: 'Invalid username or password'
         });
         
-
-
         return res.status(200).json({
             status: 'Success',
             message: 'Login successful'
         });
     } catch (e) {
-        
+        console.log(e);
+        return res.status(400).json({
+            status: 'Error',
+            message: 'Error occurred during login',
+          });
     }    
 }
 
