@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express'
 import { UserData } from './validators';
-import { createUser, getUserByEmail } from './helpers';
-import { authentication } from '../../utils/authentication';
+import { createUser, getUserByEmail, getUserWithPasswordByEmail } from './helpers';
+import { authentication, comparePassword, validatePassword } from '../../utils/authentication';
 import ResponseType from '../../interfaces/Response';
+import { User } from '@prisma/client';
 
 
 export const register = async ( req: Request<{}, any, UserData>, res:Response<ResponseType>, next: NextFunction): Promise<Response<ResponseType>>  => {
@@ -39,8 +40,29 @@ export const register = async ( req: Request<{}, any, UserData>, res:Response<Re
 }
 
 
-const login = (res:Response, req: Request): void => {
-    
+export const login = async(req:Request<{}, any, UserData>, res:Response<ResponseType>, next:NextFunction) => {
+    try {
+        const {email, password} = req.body;
+        const user = await getUserWithPasswordByEmail(email);
+        if (!user) return res.status(400).json({
+            status: 'Error', 
+            message: 'User not found'
+        });
+       const isValid = comparePassword(password, user.password);
+        if (!isValid) return res.status(400).json({
+            status: 'Error',
+            message: 'Invalid username or password'
+        });
+        
+
+
+        return res.status(200).json({
+            status: 'Success',
+            message: 'Login successful'
+        });
+    } catch (e) {
+        
+    }    
 }
 
 
