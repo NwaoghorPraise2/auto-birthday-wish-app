@@ -14,11 +14,15 @@ export type UserData = z.infer<typeof User>;
 
 
 export interface IAuthRequest extends Request {
-  user?: {
-    id: string }
-  body: UserData;
+  user?: { id: string }
   headers: { authorization?: string };
 }
+
+export interface IUserRequest extends Request {
+  user?: { id: string }
+  // headers: { authorization?: string };
+}
+
 
 
 export const Login = z.object({

@@ -2,14 +2,14 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../config/config';
 import { NextFunction } from 'express';
 import { IAuthRequest } from '../services/auth/validators';
-import ResponseType, { IAuthResponse, decodedToken} from '../interfaces/Response';
+import {IAuthResponse, decodedToken} from '../interfaces/Response';
 
-export const generateToken = (id: string) => {
-    return jwt.sign({id: id}, JWT_SECRET as string, {expiresIn: '1d', subject: 'accessApi'})
-}
+
+const JWT = JWT_SECRET as string;
 
 export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFunction) => {
-    const accesstoken = req.headers.authorization?.split(' ')[1];
+
+    const accesstoken = req.headers.authorization;
 
     if (!accesstoken) {
         return res.status(401).json({
@@ -19,8 +19,8 @@ export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFun
     }
 
     try {
-        const decoded = jwt.verify(accesstoken, JWT_SECRET as string) as decodedToken;
-        req.user = {id: decoded.id}
+        const decoded = jwt.verify(accesstoken, JWT) as decodedToken;
+        req.user = {id: decoded.id};
         next();
     } catch (error) {
         res.status(401).json({
@@ -29,3 +29,8 @@ export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFun
         })
     }
 }
+
+export const generateToken = (id: string) => {
+    return jwt.sign({id: id}, JWT_SECRET as string, {expiresIn: '1d', subject: 'accessApi'})
+}
+

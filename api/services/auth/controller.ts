@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { UserData } from './validators';
-import { createUser, getUserByEmail, getUserWithPasswordByEmail } from './helpers';
+import { IAuthRequest, IUserRequest, UserData } from './validators';
+import { createUser, getUserByEmail, getUserById, getUserWithPasswordByEmail } from './helpers';
 import { authentication, comparePassword} from '../../utils/authentication';
 import { generateToken } from '../../middlewares/authMiddleware';
 import ResponseType from '../../interfaces/Response';
@@ -71,14 +71,17 @@ export const login = async(req:Request<{}, any, UserData>, res:Response<Response
     }    
 }
 
-export const getUser = async(req:Request<{}, any, UserData>, res:Response<ResponseType>, next:NextFunction): Promise<Response<ResponseType>> => {
+export const getUser = async(req:IUserRequest, res:Response<ResponseType>, next:NextFunction): Promise<Response<ResponseType>> => {
     try {
-        const {email} = req.body;
-        const user = await getUserByEmail(email);
-        if (!user) return res.status(400).json({
-            status: 'Error',
-            message: 'User not found'
-        });
+
+        if (!req.user || !req.user.id) {
+            return res.status(400).json({
+              status: 'Error',
+              message: 'User not authenticated or ID not found',
+            });
+          }
+        const user = await getUserById(req.user.id);
+
         return res.status(200).json({
             status: 'Success',
             message: 'User found',
@@ -86,7 +89,7 @@ export const getUser = async(req:Request<{}, any, UserData>, res:Response<Respon
         });
     } catch (e) {
         console.log(e);
-        return res.status(400).json({
+        return res.status(500).json({
             status: 'Error',
             message: 'Error occurred during login',
           });
