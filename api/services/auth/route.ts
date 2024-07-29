@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import {login, register} from './controller';
-import { User } from './validators';
+import { Login, User } from './validators';
 import { validateRequest } from '../../middlewares/validator'
 
 
@@ -11,6 +11,8 @@ router.post('/signup', validateRequest({
     body: User
 }), register);
 
-router.post('/login', login);
+router.post('/login', validateRequest({
+    body: Login
+}),login);
 
 export default router;

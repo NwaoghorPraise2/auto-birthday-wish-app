@@ -39,7 +39,7 @@ export const register = async ( req: Request<{}, any, UserData>, res:Response<Re
 }
 
 
-export const login = async(req:Request<{}, any, UserData>, res:Response<ResponseType>, next:NextFunction) => {
+export const login = async(req:Request<{}, any, UserData>, res:Response<ResponseType>, next:NextFunction): Promise<Response<ResponseType>> => {
     try {
         const {email, password} = req.body;
         const user = await getUserWithPasswordByEmail(email);

@@ -9,3 +9,8 @@ export const User = z.object({
 });
 
 export type UserData = z.infer<typeof User>;
+
+export const Login = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
