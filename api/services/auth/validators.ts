@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { Request } from 'express';
 
 export const User = z.object({
   username: z.string(),
@@ -8,7 +9,17 @@ export const User = z.object({
   password: z.string(),
 });
 
+
 export type UserData = z.infer<typeof User>;
+
+
+export interface IAuthRequest extends Request {
+  user?: {
+    id: string }
+  body: UserData;
+  headers: { authorization?: string };
+}
+
 
 export const Login = z.object({
   email: z.string().email(),

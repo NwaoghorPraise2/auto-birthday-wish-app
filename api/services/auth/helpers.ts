@@ -17,6 +17,11 @@ export const createUser = (User: UserData) => {
 export const getUserWithPasswordByEmail = (email: string) => {
     return db.user.findUnique({
         where: {email},
-        select: {password: true}
+        select: {
+            id: true,
+            password: true,
+            email: true,
+            username: true,
+        }
     })
 }
