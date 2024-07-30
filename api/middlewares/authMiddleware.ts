@@ -18,8 +18,17 @@ export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFun
         })
     }
 
+    const token = accesstoken.split(' ')[1] as string;
+
+        if (!token) {
+            return res.status(401).json({
+                status: 'Error',
+                message: 'Access token not found!'
+            })
+        }
+    
     try {
-        const decoded = jwt.verify(accesstoken, JWT) as decodedToken;
+        const decoded = jwt.verify(token, JWT) as decodedToken;
         req.user = {id: decoded.id};
         next();
     } catch (error) {

@@ -16,6 +16,6 @@ router.post('/login', validateRequest({
     body: Login
 }),login);
 
-router.get('/user', grantAccess(), getUser);
+router.get('/user', grantAccess, getUser);
 
 export default router;
