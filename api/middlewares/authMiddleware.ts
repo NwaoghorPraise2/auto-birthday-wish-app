@@ -1,38 +1,26 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config/config';
+import { JWT_SECRET, REFRESH_TOKEN_SECRET } from '../config/config';
 import { NextFunction } from 'express';
 import { IAuthRequest } from '../services/auth/validators';
 import {IAuthResponse, decodedToken} from '../interfaces/Response';
 
 
-const JWT = JWT_SECRET as string;
-
 export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFunction) => {
+    const accessToken = req.headers.authorization;
 
-    const accesstoken = req.headers.authorization;
-
-    if (!accesstoken) {
+    if (!accessToken) {
         return res.status(401).json({
             status: 'Error',
             message: 'Access token not found!'
         })
     }
-
-    const token = accesstoken.split(' ')[1] as string;
-
-        if (!token) {
-            return res.status(401).json({
-                status: 'Error',
-                message: 'Access token not found!'
-            })
-        }
     
     try {
-        const decoded = jwt.verify(token, JWT) as decodedToken;
+        const decoded = jwt.verify(accessToken, JWT_SECRET as string) as decodedToken;
         req.user = {id: decoded.id};
         next();
     } catch (error) {
-        res.status(401).json({
+       return res.status(401).json({
             status: 'Error',
             message: 'Invalid token or expired'
         })
@@ -41,5 +29,9 @@ export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFun
 
 export const generateToken = (id: string) => {
     return jwt.sign({id: id}, JWT_SECRET as string, {expiresIn: '1d', subject: 'accessApi'})
+}
+
+export const generateRefreshToken = (id: string) => {
+    return jwt.sign({id: id}, REFRESH_TOKEN_SECRET as string, {expiresIn: '7d', subject: 'refreshApi'})
 }
 

@@ -14,12 +14,12 @@ export type UserData = z.infer<typeof User>;
 
 
 export interface IAuthRequest extends Request {
-  user?: { id: string }
+  user?: { id: string };
   headers: { authorization?: string };
 }
 
 export interface IUserRequest extends Request {
-  user?: { id: string }
+  user?: { id: string };
   // headers: { authorization?: string };
 }
 

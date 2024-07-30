@@ -5,12 +5,13 @@ export default interface ResponseType {
   status: string;
   message: string;
   accessToken?: string;
+  refreshToken?: string;
   data?: any;
 }
 
 export interface IAuthResponse extends Response {
-  user?: string
-  body: ResponseType;
+  user?: string;
+  body?: ResponseType;
 }
 
 export interface decodedToken extends JwtPayload {
