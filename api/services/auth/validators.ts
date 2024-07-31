@@ -7,6 +7,7 @@ export const User = z.object({
   email: z.string().email(),
   phone_number: z.string().optional(),
   password: z.string(),
+  refreshToken: z.string().optional(),
 });
 
 
@@ -23,9 +24,21 @@ export interface IUserRequest extends Request {
   // headers: { authorization?: string };
 }
 
-
-
 export const Login = z.object({
   email: z.string().email(),
   password: z.string(),
 });
+
+
+ type UserWithOutPassword = {
+    username: string;
+    name: string;
+    email: string;
+    phone_number: string;
+    refreshToken: string;
+}
+
+export interface TokenResponse {
+  accessToken: string;
+  refreshToken: string;
+}

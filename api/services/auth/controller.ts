@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
-import { IAuthRequest, IUserRequest, UserData } from './validators';
-import { createUser, getUserByEmail, getUserById, getUserWithPasswordByEmail } from './helpers';
+import { IAuthRequest, IUserRequest, TokenResponse, UserData } from './validators';
+import { createUser, generateAccessTokenAndRefreshToken, getUserByEmail, getUserById, getUserWithPasswordByEmail } from './helpers';
 import { authentication, comparePassword} from '../../utils/authentication';
 import { generateToken, generateRefreshToken } from '../../middlewares/authMiddleware';
 import ResponseType from '../../interfaces/Response';
@@ -54,9 +54,8 @@ export const login = async(req:Request<{}, any, UserData>, res:Response<Response
             message: 'Invalid username or password'
         });
 
-        const accessToken = generateToken(user.id);
-        const refreshToken = generateRefreshToken(user.id);
-        
+        const {accessToken, refreshToken}: TokenResponse = await generateAccessTokenAndRefreshToken(user.id);
+
         return res.status(200).json({
             status: 'Success',
             message: 'Login successful',

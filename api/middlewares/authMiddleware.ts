@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET, REFRESH_TOKEN_SECRET } from '../config/config';
+import { JWT_EXPIRES_IN, JWT_SECRET, REFRESH_TOKEN_EXPIRES_IN, REFRESH_TOKEN_SECRET } from '../config/config';
 import { NextFunction } from 'express';
 import { IAuthRequest } from '../services/auth/validators';
 import {IAuthResponse, decodedToken} from '../interfaces/Response';
@@ -27,11 +27,14 @@ export const grantAccess = (req: IAuthRequest, res: IAuthResponse, next: NextFun
     }
 }
 
+
 export const generateToken = (id: string) => {
-    return jwt.sign({id: id}, JWT_SECRET as string, {expiresIn: '1d', subject: 'accessApi'})
+    return jwt.sign({id: id}, JWT_SECRET as string, {expiresIn: JWT_EXPIRES_IN, subject: 'accessApi'})
 }
 
 export const generateRefreshToken = (id: string) => {
-    return jwt.sign({id: id}, REFRESH_TOKEN_SECRET as string, {expiresIn: '7d', subject: 'refreshApi'})
+    return jwt.sign({id: id}, REFRESH_TOKEN_SECRET as string, {expiresIn: REFRESH_TOKEN_EXPIRES_IN, subject: 'refreshApi'})
 }
+
+
 
