@@ -36,17 +36,14 @@ export const generateAccessTokenAndRefreshToken = async (id: string): Promise<To
         throw new Error('User not found');
     }
 
-    // Generate the access and refresh tokens
     const accessToken = generateToken(id);
     const refreshToken = generateRefreshToken(id);
 
-    // Update the user's refresh token in the database
     await db.user.update({
         where: { id },
         data: { refreshToken },
     });
 
-    // Return the tokens and the updated user information
     return { accessToken, refreshToken};
 };
 
