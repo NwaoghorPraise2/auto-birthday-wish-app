@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
-import { IAuthRequest, IUserRequest, TokenResponse, UserData } from './validators';
+import { IUserRequest, TokenResponse, UserData } from './validators';
 import { createUser, generateAccessTokenAndRefreshToken, getUserByEmail, getUserById, getUserWithPasswordByEmail } from './helpers';
 import { authentication, comparePassword} from '../../utils/authentication';
-import { generateToken, generateRefreshToken } from '../../middlewares/authMiddleware';
 import ResponseType from '../../interfaces/Response';
 
 

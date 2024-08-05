@@ -1,5 +1,10 @@
 import { NextFunction } from "express"
 
-export default (fn: any) => (req: Request, res:Response, next:NextFunction) => {
+
+interface funType {
+    (req: Request, res:Response, next:NextFunction): Promise<any>
+}
+
+export default (fn: funType) => (req: Request, res:Response, next:NextFunction) => {
     fn(req, res, next).catch(next)
 }
