@@ -1,29 +1,29 @@
-import express, {Application, Request, Response} from 'express';
+import express, { Application, Request, Response } from 'express';
 import logger from 'morgan';
-import auth from './services/auth/route';
+import auth from './services/auth/route/route';
 import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 
 const app: Application = express();
 
-// Logging middleware
-app.use(logger('dev'));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-app.use(compression());
+// Middleware setup
+app.use(logger('dev'));          // Logging middleware
+app.use(helmet());               // Security middleware to set various HTTP headers
+app.use(cors());                 // Enable Cross-Origin Resource Sharing
+app.use(express.json());         // Parse incoming JSON requests
+app.use(compression());          // Compress response bodies for better performance
 
 // Route mounting
-app.use('/api/auth', auth);
+app.use('/api/auth', auth);      // Mount authentication routes at /api/auth
 
 // Default route
 app.get('/', (req: Request, res: Response): void => {
-    res.json({
+    res.status(200).json({       // Set status code explicitly
         code: 200,
         message: 'Hello World'
     });
 });
 
-
+// Export the app instance for use in server setup
 export default app;

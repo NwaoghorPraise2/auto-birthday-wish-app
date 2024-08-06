@@ -1,12 +1,17 @@
 import app from './app';
 import { PORT } from './config/config';
 
-const port = Number(PORT || 3001);
+// Convert PORT to a number, default to 3001 if not provided
+const port: number = Number(PORT) || 3001;
 
-const server = ():void =>{
-    app.listen(port,'0.0.0.0',():void =>{
+/**
+ * @desc Starts the Express server and listens on the specified port
+ */
+const startServer = (): void => {
+    app.listen(port, '0.0.0.0', (): void => {
         console.log(`Server is running on port ${port}`);
     });
 };
 
-server();
+// Start the server
+startServer();
