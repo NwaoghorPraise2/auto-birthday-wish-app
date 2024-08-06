@@ -1,38 +1,21 @@
-// Define an interface for the API error structure
-interface IApiError {
-    statusCode: number;
-    data: null;
-    message: string;
-    success: boolean;
-    errors: any[];
-    stack: string;
-}
 
-// Define a custom error class for API errors
-class CustomApiError extends Error implements IApiError {
-    public statusCode: number;
-    public data: null = null;
-    public success: boolean = false;
-    public errors: any[] = [];
-    public stack: string = '';
 
-    constructor(
-        statusCode: number,
-        message: string,
-        errors: any[] = [],
-        stack: string = ''
-    ) {
+class GlobalError extends Error {
+    public message: string;
+    private statusCode: number;
+    private status: string;
+    private isOperational: boolean;
+
+
+    constructor( statusCode:number, message: string,) {
         super(message);
-        this.statusCode = statusCode;
         this.message = message;
-        this.errors = errors;
+        this.statusCode = statusCode;
+        this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+        this.isOperational = true;
 
-        if (stack) {
-            this.stack = stack;
-        } else {
-            Error.captureStackTrace(this, this.constructor);
-        }
+        Error.captureStackTrace(this, this.constructor);
     }
 }
 
-export default CustomApiError;
+export default GlobalError;

@@ -1,6 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { FnType } from "../services/auth/types/auth.types";
+import { errorMonitor } from "events";
 
 /**
  * @desc Higher-order function to handle asynchronous route handlers
