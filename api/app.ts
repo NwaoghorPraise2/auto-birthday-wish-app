@@ -1,7 +1,8 @@
 import express, { Application, Request, Response } from 'express';
-import logger from 'morgan';
+import morgan from 'morgan';
 import auth from './services/auth/route/route';
 import helmet from 'helmet';
+import logger from './utils/logger';
 import cors from 'cors';
 import compression from 'compression';
 import errorHandler from './middlewares/errorHandlerMiddleware';
@@ -9,7 +10,26 @@ import errorHandler from './middlewares/errorHandlerMiddleware';
 const app: Application = express();
 
 // Middleware setup
-app.use(logger('dev'));          // Logging middleware
+const morganFormat = ":method :url :status :response-time ms";
+
+app.use(
+    morgan(morganFormat, {
+      stream: {
+        write: (message) => {
+          const logObject = {
+            method: message.split(" ")[0],
+            url: message.split(" ")[1],
+            status: message.split(" ")[2],
+            responseTime: message.split(" ")[3],
+          };
+          logger.info(JSON.stringify(logObject));
+        },
+      },
+    })
+  );
+
+
+// app.use(morgan('dev'));          // Logging middleware
 app.use(helmet());               // Security middleware to set various HTTP headers
 app.use(cors());                 // Enable Cross-Origin Resource Sharing
 app.use(express.json());         // Parse incoming JSON requests
